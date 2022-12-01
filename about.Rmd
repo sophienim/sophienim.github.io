@@ -6,8 +6,7 @@ output:
     toc_float: true
 ---
 
-### About this site
+### About Me...
 
-Sometimes you need to say a bit about the site -- how it was made, where it's hosted, where the source code can be found. 
+* If you want to know more about me, please feel free to take a quick look of my [resume](resume.html).
 
-If this is for a project or analysis, I recommend giving some details about the R package versions that you used to create the content.

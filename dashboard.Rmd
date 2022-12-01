@@ -1,23 +1,24 @@
 ---
-title: "Plotly"
+title: "Airbnb Dashboard"
 output: 
-  html_document:
-    toc: true
-    toc_float: true
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
 ---
 
-We r going to make some plotly plots.
-
-## Load packages and data
-```{r}
+```{r setup, include=FALSE}
 library(tidyverse)
+library(flexdashboard)
 library(p8105.datasets)
-
 library(plotly)
 ```
 
-lets get the data...
-```{r}
+Column {data-width=650}
+-----------------------------------------------------------------------
+
+### Chart A
+
+```{r,include=FALSE}
 data("nyc_airbnb")
 
 nyc_airbnb=
@@ -32,7 +33,7 @@ nyc_airbnb=
   ) %>% 
   drop_na(rating)
 ```
-Lets make a scatterplot!
+
 ```{r}
 nyc_airbnb %>%
   mutate(text_label = str_c("Neighboorhood: ", neighbourhood, "\nPrice: $", price, "\nRating: ", rating)) %>% 
@@ -41,36 +42,25 @@ nyc_airbnb %>%
     type = "scatter", mode = "markers",
     color = ~price, text = ~text_label, alpha = 0.5)
 ```
-Boxplots?
+
+
+Column {data-width=350}
+-----------------------------------------------------------------------
+
+### Chart B
+
 ```{r}
 nyc_airbnb %>% 
   mutate(neighbourhood = fct_reorder(neighbourhood, price)) %>% 
   plot_ly(y = ~price, color = ~neighbourhood, type = "box", colors = "viridis")
 ```
-bar plot?
+
+### Chart C
+
 ```{r}
 nyc_airbnb %>% 
   count(neighbourhood) %>% 
   mutate(neighbourhood = fct_reorder(neighbourhood, n)) %>% 
   plot_ly(x = ~neighbourhood, y = ~n, color = ~neighbourhood, type = "bar", colors = "viridis")
 ```
-## ggplotly...(extremely slow)
-```{r}
-scatter_ggplot = 
-  nyc_airbnb %>%
-  ggplot(aes(x = lat, y = long, color = price)) +
-  geom_point(alpha = 0.25) +
-  coord_cartesian()
-
-ggplotly(scatter_ggplot)
-```
-
-Dashboard...
-
-
-
-
-
-
-
 
